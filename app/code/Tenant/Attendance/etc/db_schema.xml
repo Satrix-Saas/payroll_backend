@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+<table name="attendance" resource="default" engine="innodb" comment="ATTENDANCE">
+			<column xsi:type="int" name="sr_no"  nullable="false" identity="true" comment="Sr. No."/>
+			<column xsi:type="date" name="date"  nullable="false" comment="DATE"/>
+			<column xsi:type="datetime" name="punch In"  nullable="false" comment="Punch In"/>
+			<column xsi:type="datetime" name="punch out"  nullable="false" comment="Punch Out"/>
+			<column xsi:type="datetime" name="production"  nullable="false" comment="Production"/>
+			<column xsi:type="datetime" name="break"  nullable="false"  comment="Break"/>
+			<column xsi:type="datetime" name="overtime"  nullable="false" comment="Overtime"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="sr_no"/>
+			</constraint>
+		</table>
+</schema>

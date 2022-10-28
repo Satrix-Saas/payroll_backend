@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="company" resource="default" engine="innodb" comment="company">
+			<column xsi:type="int" name="cmp_id"  nullable="false" identity="true" comment="COMPANY ID"/>
+			<column xsi:type="varchar" name="cmp_name"  nullable="false"  length="255" comment="COMPANY NAME"/>
+			<column xsi:type="varchar" name="cmp_brand_name"  nullable="false" length="255" comment="COMPANY BRANDNAME"/>
+			<column xsi:type="varchar" name="cmp_address"  nullable="false" length="255" comment="COMPANY ADDRESS"/>
+			<column xsi:type="varchar" name="state"  nullable="false"  length ="12" comment="STATE"/>
+			<column xsi:type="varchar" name="pincode"  nullable="false" length="100" comment="PINCODE"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="cmp_id"/>
+			</constraint>
+		</table>
+		<table name="department" resource="default" engine="innodb" comment="DEPARTMENT">
+			<column xsi:type="int" name="dept_id"  nullable="false" identity="true" comment="DEPARTMENT ID"/>
+			<column xsi:type="varchar" name="dept_name"  nullable="false"  length="255" comment="DEPARTMENT NAME"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="dept_id"/>
+			</constraint>
+		</table>
+</schema>

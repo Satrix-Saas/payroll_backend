@@ -1,12 +1,12 @@
 <?php
-namespace Tenant\Attendance\Controller\Index;
+namespace Tenant\Company\Controller\Department;
 
-use Tenant\Attendance\Model\AttendanceFactory;
-use Tenant\Attendance\Model\ResourceModel\Post\AttendanceCollectionFactory;
+use Tenant\Company\Model\DepartmentFactory;
+use Tenant\Company\Model\ResourceModel\Post\DepartmentCollectionFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Tenant\Satrix\Helper\Data;
 
-class Index extends \Tenant\Satrix\Controller\Api\BaseApi
+class Department extends \Tenant\Satrix\Controller\Api\BaseApi
 {
     protected $_pageFactory;
     protected $resultPageFactory;
@@ -15,14 +15,14 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\App\Request\Http $request,
-        AttendanceCollectionFactory $Attendancedata,
+        DepartmentCollectionFactory $Departmentdata,
         Data $helper,
-        AttendanceFactory $AttendanceFactory
+        DepartmentFactory $DepartmentFactory
     ) {
         $this->_request = $request;
         $this->helper = $helper;
-        $this->AttendanceFactory = $AttendanceFactory;
-        $this->Attendancedata = $Attendancedata;
+        $this->DepartmentFactory = $DepartmentFactory;
+        $this->Departmentdata = $Departmentdata;
         return parent::__construct($context);
     }
 
@@ -34,18 +34,18 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
             $returnArray = $this->helper->requiredFields(
                 $data,
                 true,
-                "attendance"
+                "department"
             );
 
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-						// echo json_encode(["response" => $returnArray]);
-                        // $Attendance_data = $this->Attendancedata->create();
-                        // $Attendance_data = $Attendance_data->getData();
-						// echo json_encode(["response" => $Attendance_data]);
+						echo json_encode(["response" => $returnArray]);
+                        $Department_data = $this->Departmentdata->create();
+                        $Department_data = $Department_data->getData();
+						echo json_encode(["response" => $Department_data]);
 					
-                            $model = $this->AttendanceFactory->create();
+                            $model = $this->DepartmentFactory->create();
                             $model->setData($returnArray)->save();
                             $response = [
                                 "success" => true,

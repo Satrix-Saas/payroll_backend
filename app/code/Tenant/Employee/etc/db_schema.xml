@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+<table name="employee" resource="default" engine="innodb" comment="EMPLOYEE">
+			<column xsi:type="int" name="emp_id"  nullable="false" identity="true" comment="EMPLOYEE ID"/>
+			<column xsi:type="varchar" name="emp_type"  nullable="false"  length="255" comment="EMPLOYEE TYPE"/>
+			<column xsi:type="varchar" name="emp_name"  nullable="false"  length="255" comment="EMPLOYEE NAME"/>
+			<column xsi:type="varchar" name="emp_email"  nullable="false"  length="255" comment="EMPLOYEE E-MAIL"/>
+			<column xsi:type="varchar" name="emp_addr"  nullable="false"  length="255" comment="EMPLOYEE ADDRESS"/>
+			<column xsi:type="date" name="emp_hire_date"  nullable="false" comment="HIRE DATE"/>
+			<column xsi:type="varchar" name="emp_post"  nullable="false"  length="255" comment="JOB TITLE"/>
+			<column xsi:type="varchar" name="emp_dept"  nullable="false"  length="255" comment="DEPARTMENT"/>
+			<column xsi:type="varchar" name="mng_name"  nullable="false"  length="255" comment="MANAGER"/>
+			<column xsi:type="int" name="emp_salary"  nullable="false" comment="ANNUAL SALARY"/>
+			<column xsi:type="varchar" name="emp_location"  nullable="false"  length="255" comment="LOCATION"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="emp_id"/>
+			</constraint>
+		</table>
+        <table name="holiday" resource="default" engine="innodb" comment="HOLIDAY">
+			<column xsi:type="int" name="sr_no"  nullable="false" identity="true" comment="SR.NO"/>
+			<column xsi:type="varchar" name="title"  nullable="false"  length="255" comment="TITLE"/>
+			<column xsi:type="date" name="holiday_date"  nullable="false" comment="HOLIDAY DATE"/>
+			<column xsi:type="varchar" name="day"  nullable="false"  length="255" comment="DAY"/>
+			<column xsi:type="varchar" name="action"  nullable="false"  length="255" comment="ACTION"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="sr_no"/>
+			</constraint>
+		</table>
+</schema>

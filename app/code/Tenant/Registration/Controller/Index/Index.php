@@ -35,6 +35,7 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
    	
 	public function execute()
     { 
+	   
 		 $data = $this->getBodyParams();
 		 $response = ['success' => false];
 		 if(!empty($data)){
@@ -62,8 +63,8 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 								$model = $this->PostFactory->create();
 								$model->setData($returnArray)->save();
 								$id =  $model->getRegId();
-								Self::createToken($id);
-								$response = ['success' => true, 'message' => "Registred Successfully"];
+							    $this->helper->createToken($id);
+ 								$response = ['success' => true, 'message' => "Registred Successfully"];
 								echo json_encode(array('response' => $response));
 							}else{
 								$response = ['success' => false, 'message' => "User Already Registered"];
@@ -82,22 +83,6 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 		 }else{
 			 echo json_encode(array('response' => $response));
 		 }
-	}
-	
-	public function createToken($id){
-		$model = $this->TokenFactory->create();
-		$header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-		$payload = json_encode(['user_id' =>$id]);
-		$base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-		$base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-		$signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'abC123!', true);
-		$base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-		// Create JWT
-		$customerToken = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
-		
-		$token_array = array('reg_id' => $id , 'token' => $customerToken);
-		$model->setData($token_array)->save();
-	    return 1;
 	}
 	
 	

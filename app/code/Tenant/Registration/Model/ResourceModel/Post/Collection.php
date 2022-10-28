@@ -16,5 +16,4 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
 	{
 		$this->_init('Tenant\Registration\Model\Post', 'Tenant\Registration\Model\ResourceModel\Post');
 	}
-
 }

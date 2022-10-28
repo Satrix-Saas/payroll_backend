@@ -19,6 +19,7 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 		\Tenant\Satrix\Helper\Data $helper,
 		\Magento\Framework\App\Request\Http $request,
 		CollectionFactory $registrationData,
+		TokenCollectionFactory $tokenData,
 		PostFactory  $PostFactory,
 		token  $TokenFactory
         )
@@ -28,6 +29,7 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 		$this->PostFactory = $PostFactory;
 		$this->TokenFactory = $TokenFactory;
 		$this->registrationData = $registrationData;
+		$this->tokenData = $tokenData;
        	return parent::__construct($context);
 	}
 
@@ -43,20 +45,31 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 				    try {
 						if (!empty($returnArray)) {
 							
-							$model = $this->PostFactory->create();	
-							$user_data = $this->registrationData->create();
-							$user_data = $user_data->getData();
-							 
+							 $user_data = $this->registrationData->create();
+							 $user_data = $user_data->getData();
+
+							
 							foreach($user_data as $key=>$value){
 								if(in_array($returnArray['email'], $value)){
-								   $id =  $model->getRegId();
-								   $resultJson->setData($id);
-								    return $resultJson;
+								$model = $this->TokenFactory->create()->load($value['reg_id'],'reg_id');
+								// $model = $this->TokenFactory->create()->load($value['reg_id'],'reg_id');
+								   // $token =  $model->getToken();
+								   // $resultJson->setData($token);
+								    // return $resultJson;
+								$model->delete();
+								$response = ['success' => true, 'message' => "deleted"];
+								$this->helper->createToken($value['reg_id']);
+ 								$response = ['success' => true, 'message' => "Login Successfully"];
+								echo json_encode(array('response' => $response));									
+								   // $model = $this->TokenFactory->create()->load($value['reg_id'],'reg_id');
+								   // $token =  $model->getToken();
+								   // $resultJson->setData($token);
+								    // return $resultJson;
 								}
 							}
 						}
 					} catch (\Exception $e) {
-						$response = ['success' => false, 'message' => $returnArray];
+						$response = ['success' => false, 'message' => "db exception"];
 						$resultJson->setData($response);
 						return $resultJson;
 					}
