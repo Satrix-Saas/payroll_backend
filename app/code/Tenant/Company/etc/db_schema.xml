@@ -15,6 +15,7 @@ xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/et
 		<table name="department" resource="default" engine="innodb" comment="DEPARTMENT">
 			<column xsi:type="int" name="dept_id"  nullable="false" identity="true" comment="DEPARTMENT ID"/>
 			<column xsi:type="varchar" name="dept_name"  nullable="false"  length="255" comment="DEPARTMENT NAME"/>
+			<column xsi:type="varchar" name="action"  nullable="false"  length="255" comment="ACTION"/>
 			<constraint xsi:type="primary" referenceId="PRIMARY">
 				<column name="dept_id"/>
 			</constraint>

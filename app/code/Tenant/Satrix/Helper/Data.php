@@ -64,6 +64,7 @@ class Data extends AbstractHelper
         if ($field_array_name == "department") {
             $validation[$field_array_name] = [
                 "dept_name" => "",
+                "action" => "",
             ];
         }
         if ($field_array_name == "employee") {
@@ -92,18 +93,16 @@ class Data extends AbstractHelper
         }
         if ($field_array_name == "attendance") {
             $validation[$field_array_name] = [
-                "emp_id" => "",
                 "date" => "",
-                "emp_status" => "",
-                "check_in" => "",
-                "check_out" => "",
-                "duration" => "",
-                "remark" => "",
+                "punch_In" => "",
+                "punch_out" => "",
+                "production" => "",
+                "break" => "",
+                "overtime"  => "",
             ];
         }
         if ($field_array_name == "holiday") {
             $validation[$field_array_name] = [
-                "sr_no" => "",
                 "title" => "",
                 "holiday_date" => "",
                 "day" => "",
@@ -154,6 +153,8 @@ class Data extends AbstractHelper
 
         $token_array = ["reg_id" => $id, "token" => $customerToken];
         $model->setData($token_array)->save();
+        
         return 1;
     }
+    
 }

@@ -29,6 +29,8 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
     public function execute()
     {
         $data = $this->getBodyParams();
+        // echo"<pre>";print_r($data);
+        // exit;
         $response = ["success" => false];
         if (!empty($data)) {
             $returnArray = $this->helper->requiredFields(
@@ -40,10 +42,10 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-						// echo json_encode(["response" => $returnArray]);
-                        // $Attendance_data = $this->Attendancedata->create();
-                        // $Attendance_data = $Attendance_data->getData();
-						// echo json_encode(["response" => $Attendance_data]);
+						echo json_encode(["response" => $returnArray]);
+                        $Attendance_data = $this->Attendancedata->create();
+                        $Attendance_data = $Attendance_data->getData();
+						echo json_encode(["response" => $Attendance_data]);
 					
                             $model = $this->AttendanceFactory->create();
                             $model->setData($returnArray)->save();

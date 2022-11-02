@@ -28,10 +28,20 @@ abstract class BaseApi extends \Magento\Framework\App\Action\Action
 
     public function getBodyParams()
     {
-		// $data= $this->getRequest()->getPost();
-		// echo '<pre>';print_r($data);exit;
-        $data = $this->getRequest()->getContent();
-        $data = json_decode($data, true);
+		$data= $this->getRequest()->getPost();
+        $count = count($data);
+        if($count>0){
+            $data = json_decode($data['data'], true);
+        }else{
+            $data = $this->getRequest()->getContent();
+            $data = json_decode($data, true);
+        }
+        // echo"<pre>";print_r($data);exit;
+        // exit("12332");
+        // $data = $this->getRequest()->getContent();
+       // $data = json_decode($data['data'], true);
+        // echo"<pre>";print_r($data);exit;
+
         return $data;
     }
 }

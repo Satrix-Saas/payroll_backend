@@ -1,6 +1,5 @@
 <?php
-namespace Tenant\Login\Controller\Index;
-
+namespace Tenant\Employee\Controller\Reset;
 
 use Magento\Framework\Controller\ResultFactory;
 use Tenant\Registration\Model\PostFactory;
@@ -44,22 +43,25 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 				 $flag = "";
 				    try {
 						if (!empty($returnArray)) {
+                                // echo json_encode(["response" => $returnArray]);
+                                // $Employee_data = $this->registrationData->create();
+                                // $Employee_data = $Employee_data->getData();
+                                // echo json_encode(["response" => $Employee_data]);
 							
-							 $user_data = $this->registrationData->create();
-							 $user_data = $user_data->getData();
+                                $user_data = $this->registrationData->create();
+                                $user_data = $user_data->getData();
 
 							
 							foreach($user_data as $key=>$value){
 								if(in_array($returnArray['email'], $value)){
-									if($returnArray['password'] === $value['password']){
-									$model =  $this->TokenFactory->create()->load($value['reg_id'],'reg_id');
-									$model->delete();
-									$response = ['success' => true, 'message' => "deleted"];
-									$this->helper->createToken($value['reg_id']);
-									$response = ['success' => true, 'message' => "Login Successfully"];
+									if($returnArray['email'] === $value['email']){	
+										echo json_encode(array('response' => $returnArray['password']));
+										$model->setData($returnArray['password'])->save();
+										
+									$response = ['success' => true, 'message' => "Password Reset Successfully"];
 									echo json_encode(array('response' => $response));								
 								}else{
-									$response = ['success' => false, 'message' => "Email or Password are incorrect"];
+									$response = ['success' => false, 'message' => "Email  Doesn't Match"];
 									echo json_encode(array('response' => $response));
 								}
 							}
