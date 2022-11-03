@@ -1,0 +1,46 @@
+<?php
+namespace Tenant\Employee\Controller;
+
+
+use Magento\Framework\Controller\ResultFactory;
+
+
+abstract class BaseApi extends \Magento\Framework\App\Action\Action
+{
+	public function __construct(\Magento\Framework\App\Action\Context $context)
+    {
+        parent::__construct($context);
+		//echo "inside 346";exit;
+		$token = $this->getRequest()->getHeader('token');
+		if(!$token || $token == "") {
+			$resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
+			$response = array();
+			$response['status'] = "error";
+			$response['message'] = "UnAuthorize";
+			$resultJson->setData($response);
+			echo json_encode($response);exit;
+			//return $resultJson;
+		}
+		//echo $token;exit;
+    }
+	
+	public function getBodyParams($requiredFieldName = [], $validation = []) {
+		
+		$data = $this->getRequest()->getContent();
+		$data = json_decode($data, true);
+		if(!empty($requiredFieldName)) {
+			
+			foreach($requiredFieldName as $required) {
+				if(!isset($data[$required])){
+					$response = array();
+					$response['status'] = "error";
+					$response['message'] = $validation[$required];
+					
+					echo json_encode($response);exit;
+				}
+			}
+		}
+		
+		return $data;
+	}
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="token" resource="default" engine="innodb" comment="Token">
+			<column xsi:type="int" name="id"  nullable="false" identity="true" comment="Token ID"/>
+			<column xsi:type="int" name="reg_id"  nullable="false" comment="Registration ID"/>
+			<column xsi:type="text" name="token"  nullable="false" comment="User Token"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="id"/>
+			</constraint>
+			<constraint xsi:type="foreign" referenceId="User_token" table="token" column="reg_id" referenceTable="registration" referenceColumn="reg_id"/>
+
+		</table>
+</schema>

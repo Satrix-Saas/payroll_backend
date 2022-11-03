@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="registration" resource="default" engine="innodb" comment="Registration">
+			<column xsi:type="int" name="reg_id"  nullable="false" identity="true" comment="Registration ID"/>
+			<column xsi:type="varchar" name="username"  nullable="false"  length="255" comment="Full name ID"/>
+			<column xsi:type="varchar" name="org_name"  nullable="false" length="255" comment="Organisation name"/>
+			<column xsi:type="varchar" name="email"  nullable="false" length="255" comment="Email"/>
+			<column xsi:type="int" name="contact"  nullable="false"  comment="Phone no."/>
+			<column xsi:type="varchar" name="password"  nullable="false"  length ="120" comment="Password."/>
+			<column xsi:type="varchar" name="org_size"  nullable="false" length="100" comment="No.of Employee"/>
+			<column xsi:type="varchar" name="emp_type" nullable="false" length="255" comment="Your Title"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="reg_id"/>
+			</constraint>
+		</table>
+</schema>
