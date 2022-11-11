@@ -17,6 +17,7 @@ class Data extends AbstractHelper
 
         $validation_field_array = self::validationFieldsArray($name);
 
+
         if ($validate_enabled) {
             foreach ($requiredFieldName as $required_field => $value) {
                 if (!isset($validation_field_array[$required_field])) {
@@ -31,8 +32,15 @@ class Data extends AbstractHelper
 			if(!isset($response["status"])){
 			   $response["status"] = "success";
 			}
-            return $response;
+          
         }
+        else{
+            $response["status"] = "success";
+            foreach ($requiredFieldName as $required_field => $value) {
+                 $response[$required_field] = $value;
+            }
+        }
+        return $response;
     }
 
     public function validationFieldsArray($field_array_name)
@@ -54,11 +62,13 @@ class Data extends AbstractHelper
         if ($field_array_name == "company") {
             $validation[$field_array_name] = [
                 "cmp_name" => "",
-                "cmp_name" => "",
                 "cmp_brand_name" => "",
                 "cmp_address" => "",
                 "state" => "",
                 "pincode" => "",
+                "pan_num" => "",
+                "tan_num" => "",
+                "gstin" => "",
             ];
         }
         if ($field_array_name == "department") {
@@ -72,7 +82,6 @@ class Data extends AbstractHelper
                 "emp_type" => "",
                 "emp_name" => "",
                 "emp_email" => "",
-                "emp_addr" => "",
                 "emp_hire_date" => "",
                 "emp_post" => "",
                 "emp_dept" => "",
@@ -85,10 +94,12 @@ class Data extends AbstractHelper
 		if ($field_array_name == "leave") {
             $validation[$field_array_name] = [
                 "emp_id" => "",
-                "leave_status" => "",
-                "leave_from" => "",
-                "leave_to" => "",
-                "remark" => "",
+                "leave_name" => "",
+                "from" => "",
+                "to" => "",
+                "no_of_day" => "",
+                "remaining_leave" => "",
+                "reason" => "",
             ];
         }
         if ($field_array_name == "attendance") {
@@ -103,10 +114,22 @@ class Data extends AbstractHelper
         }
         if ($field_array_name == "holiday") {
             $validation[$field_array_name] = [
-                "title" => "",
+                "holiday_name" => "",
                 "holiday_date" => "",
-                "day" => "",
-                "action" => "",
+            ];
+        }
+		if ($field_array_name == "reset_password") {
+            $validation[$field_array_name] = [
+			    "email" => "",
+                "new_password" => "",
+                "confirm_password" => ""
+            ];
+        }
+        if ($field_array_name == "document") {
+            $validation[$field_array_name] = [
+			    "upload_document" => "",
+                "description" => "",
+                "file_image" => ""
             ];
         }
 

@@ -1,7 +1,6 @@
 <?php
 namespace Tenant\Registration\Controller\Index;
 
-
 use Magento\Framework\Controller\ResultFactory;
 use Tenant\Registration\Model\PostFactory;
 use Tenant\Registration\Model\TokenFactory as token;
@@ -31,16 +30,14 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 		$this->registrationData = $registrationData;
        	return parent::__construct($context);
 	}
-
-   	
 	public function execute()
     { 
-	   
+	  $user_array = $this->getResponseArray();
+		// echo"<pre>";print_r($user_array);exit;
 		 $data = $this->getBodyParams();
-		 $response = ['success' => false];
+		 $response = ['ResponseCode' => $user_array['ResponseCode']['false']];
 		 if(!empty($data)){
-			 
-			 $returnArray = $this->helper->requiredFields($data , true , 'register');
+			 $returnArray = $this->helper->requiredFields($data , 1 , 'register');
 			 
 			 if($returnArray['status'] != "error"){
 				 $flag = "";
@@ -51,7 +48,7 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 							$user_data = $user_data->getData();
 							
 							if(empty($user_data)){
-							   $flag = true;
+							   $flag = 1;
 							}
 							 foreach($user_data as $key=>$value){
 								$flag = !(in_array($returnArray['email'], $value));
@@ -64,20 +61,20 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 								$model->setData($returnArray)->save();
 								$id =  $model->getRegId();
 							    $this->helper->createToken($id);
- 								$response = ['success' => true, 'message' => "Registred Successfully"];
+ 								$response = ['ResponseCode' => $user_array['ResponseCode']['true'], 'ResponseMessage' => $user_array['register']['true']];
 								echo json_encode(array('response' => $response));
 							}else{
-								$response = ['success' => false, 'message' => "User Already Registered"];
+								$response = ['ResponseCode' => $user_array['ResponseCode']['false'], 'ResponseMessage' => $user_array['register']['false']];
 								echo json_encode(array('response' => $response));
 							}
 						}
 					} catch (\Exception $e) {
-						$response = ['success' => false, 'message' => $returnArray];
+						$response = ['ResponseCode' => $user_array['ResponseCode']['false'], 'ResponseMessage' => $user_array['dbexception']];
 						echo json_encode(array('response' => $response));
 					}
 				
 			 }else{
-				$response = ['success' => false, 'message' => $returnArray];
+				$response = ['ResponseCode' => $user_array['ResponseCode']['false'], 'ResponseMessage' => $returnArray];
 				echo json_encode(array('response' => $response));
 			 }
 		 }else{

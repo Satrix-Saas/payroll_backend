@@ -1,38 +1,73 @@
 <?php
 namespace Tenant\Leave\Controller\Index;
 
-
+use Tenant\Leave\Model\LeaveFactory;
+use Tenant\Leave\Model\ResourceModel\Post\LeaveCollectionFactory;
 use Magento\Framework\Controller\ResultFactory;
-
+use Tenant\Satrix\Helper\Data;
 
 class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 {
-	protected $_pageFactory;
+    protected $_pageFactory;
     protected $resultPageFactory;
+    protected $_request;
 
-	public function __construct(
-		\Magento\Framework\App\Action\Context $context,
-		\Magento\Framework\View\Result\PageFactory $pageFactory,
-		\Magento\Framework\Message\ManagerInterface $messageManager
-         )
-	{
-		$this->messageManager = $messageManager;
-       	return parent::__construct($context);
-	}
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\App\Request\Http $request,
+        LeaveCollectionFactory $Leavedata,
+        Data $helper,
+        LeaveFactory $LeaveFactory
+    ) {
+        $this->_request = $request;
+        $this->helper = $helper;
+        $this->LeaveFactory = $LeaveFactory;
+        $this->Leavedata = $Leavedata;
+        return parent::__construct($context);
+    }
 
     public function execute()
-    { 
-		$resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-		$leave = array();
-		$leave['Status'] = "abc";
-		$leave['leave_from'] = "abc";
-		$leave['leave_to'] = "abc";
-		$leave['remark'] = "abc";
-		$resultJson->setData($leave);
-		$resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $resultRedirect->setUrl($this->_redirect->getRefererUrl());
-		$message = __('leave Data Save Successful'); 
-		$this->messageManager->addSuccessMessage($message);
-        return $resultRedirect;
-	}
+    {
+        $data = $this->getBodyParams();
+        $response = ["ResponseCode" => false];
+        if (!empty($data)) {
+            $returnArray = $this->helper->requiredFields(
+                $data,
+                true,
+                "leave"
+            );
+
+            if ($returnArray["status"] != "error") {
+                try {
+                    if (!empty($returnArray)) {
+                            $model = $this->LeaveFactory->create();
+                            $model->setData($returnArray)->save();
+
+                            $response = [
+                                "ResponseCode" => 1,
+                                "ResponseMessage" => "Data inserted ",
+                            ];
+                            echo json_encode(["response" => $response]);
+                        }
+                        else{
+                            $response = ['ResponseCode' => 0, 'ResponseMessage' => "not inserted"];
+                            echo json_encode(array('response' => $response));
+                        }
+					}
+						
+                 catch (\Exception $e) {
+                    $response = [
+                        "ResponseCode" => 0,
+                        "ResponseMessage" => "db_exception",
+                    ];
+                    echo json_encode(["response" => $response]);
+                }
+            } else {
+                $response = ["ResponseCode" => 0, "ResponseMessage" => $returnArray];
+                echo json_encode(["response" => $response]);
+            }
+        } else {
+            echo json_encode(["response" => $response]);
+        }
+    }
 }

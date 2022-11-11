@@ -1,9 +1,9 @@
 <?php
-namespace Tenant\Company\Model\ResourceModel\Post;
+namespace Tenant\Leave\Model\ResourceModel\Post;
 
 class LeaveCollection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-	protected $_idFieldName = 'emp_id';
+	protected $_idFieldName = 'id';
 	protected $_eventPrefix = 'Leave_Leave_Leavecollection';
 	protected $_eventObject = 'Leave_collection';
 
@@ -14,6 +14,6 @@ class LeaveCollection extends \Magento\Framework\Model\ResourceModel\Db\Collecti
 	 */
 	protected function _construct()
 	{
-		$this->_init('Tenant\Company\Model\Leave', 'Tenant\Company\Model\ResourceModel\Leave');
+		$this->_init('Tenant\Leave\Model\Leave', 'Tenant\Leave\Model\ResourceModel\Leave');
 	}
 }

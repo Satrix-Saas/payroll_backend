@@ -29,7 +29,7 @@ class Holiday extends \Tenant\Satrix\Controller\Api\BaseApi
     public function execute()
     {
         $data = $this->getBodyParams();
-        $response = ["success" => false];
+        $response = ["ResponseCode" => 0];
         if (!empty($data)) {
             $returnArray = $this->helper->requiredFields(
                 $data,
@@ -40,23 +40,22 @@ class Holiday extends \Tenant\Satrix\Controller\Api\BaseApi
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-						echo json_encode(["response" => $returnArray]);
                         $Holiday_data = $this->Holidaydata->create();
                         $Holiday_data = $Holiday_data->getData();
-						echo json_encode(["response" => $Holiday_data]);
 					
                             $model = $this->HolidayFactory->create();
                             $model->setData($returnArray)->save();
+
                             $response = [
-                                "success" => true,
-                                "message" => "Data inserted Successfully",
+                                "ResponseCode" => 1,
+                                "ResponseMessage" => "Data inserted Successfully",
                             ];
                             echo json_encode(["response" => $response]);
                         }
 					  else {
                             $response = [
-                                "success" => false,
-                                "message" => "Error",
+                                "ResponseCode" => 0,
+                                "ResponseMessage" => "Error",
                             ];
                             echo json_encode(["response" => $response]);
                         }
@@ -64,13 +63,13 @@ class Holiday extends \Tenant\Satrix\Controller\Api\BaseApi
 						
                  catch (\Exception $e) {
                     $response = [
-                        "success" => false,
-                        "message" => "db_exception",
+                        "ResponseCode" => 0,
+                        "ResponseMessage" => "db_exception",
                     ];
                     echo json_encode(["response" => $response]);
                 }
             } else {
-                $response = ["success" => false, "message" => $returnArray];
+                $response = ["ResponseCode" => 0, "ResponseMessage" => $returnArray];
                 echo json_encode(["response" => $response]);
             }
         } else {

@@ -1,6 +1,5 @@
 <?php
-namespace Tenant\Login\Controller\Index;
-
+namespace Tenant\Login\Controller\Reset;
 
 use Magento\Framework\Controller\ResultFactory;
 use Tenant\Registration\Model\PostFactory;
@@ -8,7 +7,7 @@ use Tenant\Registration\Model\TokenFactory as token;
 use Tenant\Registration\Model\ResourceModel\Post\CollectionFactory;
 use Tenant\Registration\Model\ResourceModel\Post\TokenCollectionFactory;
 
-class Index extends \Tenant\Satrix\Controller\Api\BaseApi
+class Password extends \Tenant\Satrix\Controller\Api\BaseApi
 {
 	protected $_pageFactory;
     protected $resultPageFactory;
@@ -39,31 +38,28 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 		 $data = $this->getBodyParams();
 		 $response = ['ResponseCode' => 0];
 		if(!empty($data)){
-			$returnArray = $this->helper->requiredFields($data , 1 , 'login');
+			$returnArray = $this->helper->requiredFields($data , 1 , 'reset_password');
 				 if($returnArray['status'] != "error"){
 				 $flag = "";
 				    try {
 						if (!empty($returnArray)) {
-							
-							 $user_data = $this->registrationData->create();
-							 $user_data = $user_data->getData();
-
+                                $user_data = $this->registrationData->create();
+                                $user_data = $user_data->getData();
 							
 							foreach($user_data as $key=>$value){
 								if(in_array($returnArray['email'], $value)){
-									if($returnArray['password'] === $value['password']){
-									$model =  $this->TokenFactory->create()->load($value['reg_id'],'reg_id');
-									$model->delete();
-									$response = ['ResponseCode' => 1, 'ResponseMessage' => "deleted"];
-									$this->helper->createToken($value['reg_id']);
-									$response = ['ResponseCode' => 1, 'ResponseMessage' => "Login Successfully"];
-									echo json_encode(array('response' => $response));								
-								}else{
-									$response = ['ResponseCode' => 0, 'ResponseMessage' => "Email or Password are incorrect"];
-									echo json_encode(array('response' => $response));
+									if($returnArray['email'] === $value['email']){	
+										$model =  $this->PostFactory->create()->load($value['reg_id'],'reg_id');
+										$model->setPassword($returnArray['new_password']);
+										$model->save();
+										$response = ['ResponseCode' => 1, 'ResponseMessage' => "Password Reset Successfully"];
+										echo json_encode(array('response' => $response));								
+									}else{
+										$response = ['ResponseCode' => 0, 'ResponseMessage' => "Password Reset UnSuccessful"];
+										echo json_encode(array('response' => $response));
+									}
 								}
 							}
-						}
 						}
 					} catch (\Exception $e) {
 						$response = ['ResponseCode' => 0, 'ResponseMessage' => "db exception"];

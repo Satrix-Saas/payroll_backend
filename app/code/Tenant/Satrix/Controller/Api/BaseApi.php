@@ -44,4 +44,20 @@ abstract class BaseApi extends \Magento\Framework\App\Action\Action
 
         return $data;
     }
+
+    public function getResponseArray()
+    {
+        $response_array = array();
+        $resonse_array['ResponseCode'] =['true' => 1,'false' => 0]; 
+        $resonse_array['register'] = ['true' => 'Registration Successfully','false' => 'User all ready registered'];
+        $resonse_array['login'] = ['true' => 'login Successfully','false' => 'Incorrect Email or Password'];
+        $resonse_array['reset'] = ['true' => 'Password Updated Successfully','false' => 'Password Updated UnSuccessfully'];
+        $resonse_array['dbexception'] = "db_exception";
+        $resonse_array['leave'] = ['true' => 'Leave Updated Succesfully','false' => 'leave Not Updated'];
+        $resonse_array['attendance'] = ['true' => 'Registration Successfully','false' => 'User all ready registered'];
+        $resonse_array['holiday'] = ['true' => 'Registration Successfully','false' => 'User all ready registered'];
+        $resonse_array['department'] = ['true' => 'Registration Successfully','false' => 'User all ready registered'];
+        $resonse_array['company'] = ['true' => 'Registration Successfully','false' => 'User all ready registered'];
+        return $resonse_array;
+    }
 }

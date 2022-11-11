@@ -3,7 +3,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 <table name="attendance" resource="default" engine="innodb" comment="ATTENDANCE">
 			<column xsi:type="int" name="sr_no"  nullable="false" identity="true" comment="Sr. No."/>
-			<column xsi:type="date" name="date"  nullable="false" comment="DATE"/>
+			<column xsi:type="int" name="emp_id"  nullable="false" identity="false" comment="Emp.Id"/>
+			<column xsi:type="date" name="punch_date"  nullable="false" comment="DATE"/>
 			<column xsi:type="varchar" name="punch_In"  nullable="false" comment="Punch In"/>
 			<column xsi:type="varchar" name="punch_out"  nullable="false" comment="Punch Out"/>
 			<column xsi:type="varchar" name="production"  nullable="false" comment="Production"/>

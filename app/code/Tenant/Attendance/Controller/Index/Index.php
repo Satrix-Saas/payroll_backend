@@ -35,48 +35,69 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
         if (!empty($data)) {
             $returnArray = $this->helper->requiredFields(
                 $data,
-                true,
+                false,
                 "attendance"
             );
-
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-						echo json_encode(["response" => $returnArray]);
+                        //  echo"<pre>";print_r($returnArray);
                         $Attendance_data = $this->Attendancedata->create();
                         $Attendance_data = $Attendance_data->getData();
-						echo json_encode(["response" => $Attendance_data]);
-					
-                            $model = $this->AttendanceFactory->create();
-                            $model->setData($returnArray)->save();
-                            $response = [
-                                "success" => true,
-                                "message" => "Data inserted Successfully",
+                        if(empty($Attendance_data)){
+                                $model = $this->AttendanceFactory->create();
+                                $model->setData($returnArray)->save();
+                                $response = [
+                                "ResponseCode" => 1,
+                                "ResponseMessage" => "Data inserted Successfully",
                             ];
                             echo json_encode(["response" => $response]);
-                        }
-					  else {
-                            $response = [
-                                "success" => false,
-                                "message" => "Error",
-                            ];
-                            echo json_encode(["response" => $response]);
-                        }
-					}
-						
-                 catch (\Exception $e) {
+                            }
+             // -------------------------------------------------------------------------------------------------
+                            foreach($Attendance_data as $key=>$value){
+                              
+                                if(in_array($returnArray['punch_date'], $value)){
+                                    
+                                    if($returnArray['punch_date'] != $value['punch_date'] && $returnArray['emp_id'] != $value['emp_id'] ){	
+                                        $model = $this->AttendanceFactory->create();
+                                        $model->setData($returnArray)->save();
+                                        $response = [
+                                        "ResponseCode" => 1,
+                                        "ResponseMessage" => "Data inserted Successfully",
+                                    ];
+                                    echo json_encode(["response" => $response]);
+                                }
+                                  else{
+                                        if($returnArray['punch_date'] === $value['punch_date']){	
+                                        $model =  $this->AttendanceFactory->create()->load($value['punch_date'],'punch_date');
+                                        $model->setPunchOut($returnArray['punch_out']);
+                                        $model->save();
+                                        $response = ['ResponseCode' => 1, 'ResponseMessage' => "punchout update"];
+                                        echo json_encode(array('response' => $response));								
+                                    }else{
+                                        $response = ['ResponseCode' => 0, 'ResponseMessage' => "Aleady punchout"];
+                                        echo json_encode(array('response' => $response));
+                                    }
+                                }
+                            }
+                            }
+                        }else{
+                            $response = ['ResponseCode' => 0, 'ResponseMessage' => "Aleady punchout"];
+                            echo json_encode(array('response' => $response));
+                    }      
+                    }catch (\Exception $e) {
                     $response = [
-                        "success" => false,
-                        "message" => "db_exception",
+                        "ResponseCode" => 0,
+                        "ResponseMessage" => "db_exception",
                     ];
-                    echo json_encode(["response" => $response]);
+                    echo json_encode(["ResponseMessage" => $response]);
                 }
             } else {
-                $response = ["success" => false, "message" => $returnArray];
-                echo json_encode(["response" => $response]);
+                $response = ["ResponseCode" => 0, "ResponseMessage" => $returnArray];
+                echo json_encode(["ResponseMessage" => $response]);
             }
         } else {
-            echo json_encode(["response" => $response]);
+            echo json_encode(["ResponseMessage" => $response]);
         }
     }
 }

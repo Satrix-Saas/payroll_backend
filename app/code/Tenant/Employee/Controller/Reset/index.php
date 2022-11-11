@@ -43,27 +43,19 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 				 $flag = "";
 				    try {
 						if (!empty($returnArray)) {
-                                // echo json_encode(["response" => $returnArray]);
-                                // $Employee_data = $this->registrationData->create();
-                                // $Employee_data = $Employee_data->getData();
-                                // echo json_encode(["response" => $Employee_data]);
-							
                                 $user_data = $this->registrationData->create();
                                 $user_data = $user_data->getData();
 							
 							foreach($user_data as $key=>$value){
 								if(in_array($returnArray['email'], $value)){
 									if($returnArray['email'] === $value['email']){	
-										echo json_encode(array('response' => $returnArray['password']));
-										$model = $this->registrationData->create();
-										$model->load('reg_id',$value['password']);
-										$model->setData('password');
-										$model->save();
-									
+									$model =  $this->PostFactory->create()->load($value['reg_id'],'reg_id');
+									$model->setPassword($returnArray['password']);
+									$model->save();
 									$response = ['success' => true, 'message' => "Password Reset Successfully"];
 									echo json_encode(array('response' => $response));								
 								}else{
-									$response = ['success' => false, 'message' => "Email  Doesn't Match"];
+									$response = ['success' => false, 'message' => "Email or Password Doesn't Match"];
 									echo json_encode(array('response' => $response));
 								}
 							}

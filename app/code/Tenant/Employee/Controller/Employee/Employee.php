@@ -43,22 +43,19 @@ class Employee extends \Tenant\Satrix\Controller\Api\BaseApi
 						echo json_encode(["response" => $returnArray]);
                         $Employee_data = $this->Employeedata->create();
                         $Employee_data = $Employee_data->getData();
-						echo json_encode(["response" => $Employee_data]);
 					
                             $model = $this->EmployeeFactory->create();
                             $model->setData($returnArray)->save();
+
                             $response = [
-                                "success" => true,
+                                "success" => 1,
                                 "message" => "Data inserted Successfully",
                             ];
                             echo json_encode(["response" => $response]);
                         }
-					  else {
-                            $response = [
-                                "success" => false,
-                                "message" => "Error",
-                            ];
-                            echo json_encode(["response" => $response]);
+                        else{
+                            $response = ['success' => 0, 'message' => "User Already Registered"];
+                            echo json_encode(array('response' => $response));
                         }
 					}
 						

@@ -1,12 +1,12 @@
 <?php
-namespace Tenant\Company\Controller\Department;
+namespace Tenant\Employee\Controller\Document;
 
-use Tenant\Company\Model\DepartmentFactory;
-use Tenant\Company\Model\ResourceModel\Post\DepartmentCollectionFactory;
+use Tenant\Employee\Model\DocumentFactory;
+use Tenant\Employee\Model\ResourceModel\Post\DocumentCollectionFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Tenant\Satrix\Helper\Data;
 
-class Department extends \Tenant\Satrix\Controller\Api\BaseApi
+class Document extends \Tenant\Satrix\Controller\Api\BaseApi
 {
     protected $_pageFactory;
     protected $resultPageFactory;
@@ -15,36 +15,42 @@ class Department extends \Tenant\Satrix\Controller\Api\BaseApi
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\App\Request\Http $request,
-        DepartmentCollectionFactory $Departmentdata,
+        DocumentCollectionFactory $documentdata,
         Data $helper,
-        DepartmentFactory $DepartmentFactory
+        DocumentFactory $documentFactory
     ) {
         $this->_request = $request;
         $this->helper = $helper;
-        $this->DepartmentFactory = $DepartmentFactory;
-        $this->Departmentdata = $Departmentdata;
+        $this->DocumentFactory = $documentFactory;
+        $this->documentdata = $documentdata;
         return parent::__construct($context);
     }
 
     public function execute()
     {
         $data = $this->getBodyParams();
-        $response = ["success" => false];
+        $response = ["ResponseCode" => 0];
         if (!empty($data)) {
             $returnArray = $this->helper->requiredFields(
                 $data,
                 true,
-                "department"
+                "document"
             );
 
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-                        $Department_data = $this->Departmentdata->create();
-                        $Department_data = $Department_data->getData();
-					
-                            $model = $this->DepartmentFactory->create();
+                        // echo json_encode(["response" => $returnArray]);
+                        // exit;
+
+                        $document_data = $this->documentdata->create();
+                        $document_data = $document_data->getData();
+                        // echo json_encode(["response" => $document_data]);
+                        // exit;
+
+                            $model = $this->DocumentFactory->create();
                             $model->setData($returnArray)->save();
+                       
                             $response = [
                                 "ResponseCode" => 1,
                                 "ResponseMessage" => "Data inserted Successfully",
@@ -65,15 +71,14 @@ class Department extends \Tenant\Satrix\Controller\Api\BaseApi
                         "ResponseCode" => 0,
                         "ResponseMessage" => "db_exception",
                     ];
-                    echo json_encode(["ResponseMessage" => $response]);
+                    echo json_encode(["response" => $response]);
                 }
             } else {
                 $response = ["ResponseCode" => 0, "ResponseMessage" => $returnArray];
-                echo json_encode(["ResponseMessage" => $response]);
+                echo json_encode(["response" => $response]);
             }
         } else {
-            echo json_encode(["ResponseMessage" => $response]);
+            echo json_encode(["response" => $response]);
         }
     }
 }
-

@@ -40,23 +40,21 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
             if ($returnArray["status"] != "error") {
                 try {
                     if (!empty($returnArray)) {
-						// echo json_encode(["response" => $returnArray]);
                         $Company_data = $this->Companydata->create();
                         $Company_data = $Company_data->getData();
-						echo json_encode(["response" => $Company_data]);
 					
                             $model = $this->CompanyFactory->create();
                             $model->setData($returnArray)->save();
                             $response = [
-                                "success" => true,
-                                "message" => "Data inserted Successfully",
+                                "ResponseCode" => 1,
+                                "ResponseMessage" => "Data inserted Successfully",
                             ];
                             echo json_encode(["response" => $response]);
                         }
 					  else {
                             $response = [
-                                "success" => false,
-                                "message" => "Error",
+                                "ResponseCode" => 0,
+                                "ResponseMessage" => "Error",
                             ];
                             echo json_encode(["response" => $response]);
                         }
@@ -64,28 +62,18 @@ class Index extends \Tenant\Satrix\Controller\Api\BaseApi
 						
                  catch (\Exception $e) {
                     $response = [
-                        "success" => false,
-                        "message" => "db_exception",
+                        "ResponseCode" => 0,
+                        "ResponseMessage" => "db_exception",
                     ];
-                    echo json_encode(["response" => $response]);
+                    echo json_encode(["ResponseMessage" => $response]);
                 }
             } else {
-                $response = ["success" => false, "message" => $returnArray];
-                echo json_encode(["response" => $response]);
+                $response = ["ResponseCode" => 0, "ResponseMessage" => $returnArray];
+                echo json_encode(["ResponseMessage" => $response]);
             }
         } else {
-            echo json_encode(["response" => $response]);
+            echo json_encode(["ResponseMessage" => $response]);
         }
     }
 }
 
-// echo '<pre>';print_r($data);exit;
-// $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-// $company = array();
-// $company['email'] = "abc";
-// $company['brandname'] = "abc";
-// $company['address'] = "abc";
-// $company['state'] = "abc";
-// $company['pin'] = "abc";
-// $resultJson->setData($company);
-// return $resultJson;

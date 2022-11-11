@@ -7,17 +7,34 @@ xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/et
 			<column xsi:type="varchar" name="cmp_brand_name"  nullable="false" length="255" comment="COMPANY BRANDNAME"/>
 			<column xsi:type="varchar" name="cmp_address"  nullable="false" length="255" comment="COMPANY ADDRESS"/>
 			<column xsi:type="varchar" name="state"  nullable="false"  length ="12" comment="STATE"/>
-			<column xsi:type="varchar" name="pincode"  nullable="false" length="100" comment="PINCODE"/>
+			<column xsi:type="int" name="pincode"  nullable="false" comment="PINCODE"/>
+			<column xsi:type="int" name="pan_num"  nullable="false" comment="COMPANY PAN"/>
+			<column xsi:type="int" name="tan_num"  nullable="false" comment="COMPANY TAN"/>
+			<column xsi:type="int" name="gstin"  nullable="false" comment="COMPANY GSTIN"/>
 			<constraint xsi:type="primary" referenceId="PRIMARY">
 				<column name="cmp_id"/>
 			</constraint>
 		</table>
+
+         <!-- -Department- -->
+
 		<table name="department" resource="default" engine="innodb" comment="DEPARTMENT">
 			<column xsi:type="int" name="dept_id"  nullable="false" identity="true" comment="DEPARTMENT ID"/>
 			<column xsi:type="varchar" name="dept_name"  nullable="false"  length="255" comment="DEPARTMENT NAME"/>
-			<column xsi:type="varchar" name="action"  nullable="false"  length="255" comment="ACTION"/>
 			<constraint xsi:type="primary" referenceId="PRIMARY">
 				<column name="dept_id"/>
+			</constraint>
+		</table>
+<!-- -CLAIM A REIMBURSEMENT- -->
+		<table name="reimbursement" resource="default" engine="innodb" comment="CLAIM A REIMBURSEMENT">
+		<column xsi:type="int" name="emp_id"  nullable="false" identity="true" comment="emp_id"/>
+			<column xsi:type="varchar" name="claim_type"  nullable="false" comment="TYPE OF REIMBURSEMENT"/>
+			<column xsi:type="date" name="claim_date"  nullable="false"  comment="EXPENSE DATE"/>
+			<column xsi:type="varchar" name="claim_details"  nullable="false"  length="255" comment="ANY DETAILS"/>
+			<column xsi:type="int" name="claim_amount"  nullable="false"  comment="AMOUNT"/>
+			<column xsi:type="varchar" name="claim_dct"  nullable="false"  length="255" comment="SUPPORT IMAGE OR DOCUMENT"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="emp_id"/>
 			</constraint>
 		</table>
 </schema>

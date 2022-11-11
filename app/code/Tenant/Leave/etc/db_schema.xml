@@ -3,15 +3,13 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 <table name="leave" resource="default" engine="innodb" comment="LEAVE">
 		    <column xsi:type="int" name="id"  nullable="false" identity="true" comment="ID"/>
-			<column xsi:type="smallint" name="emp_id"  nullable="false" identity="false" comment="EMPLOYEE ID"/>
-			<column xsi:type="varchar" name="employee_name"  nullable="false"  length="255" comment="EMPLOYEE_NAME"/>
-			<column xsi:type="varchar" name="leave_type"  nullable="false" length="255" comment="LEAVE TYPE"/>
+			<column xsi:type="int" name="emp_id"  nullable="false" comment="EMPLOYEE ID"/>
+			<column xsi:type="varchar" name="leave_name"  nullable="false" length="255" comment="LEAVE TYPE"/>
 			<column xsi:type="date" name="from"  nullable="false"  comment="FROM"/>
 			<column xsi:type="date" name="to"  nullable="false"  comment="TO"/>
-            <column xsi:type="varchar" name="no_of_day"  nullable="false"  length="255" comment="NO_OF_DAY"/>
-            <column xsi:type="varchar" name="reason"  nullable="false"  length="255" comment="REASON"/>
-            <column xsi:type="varchar" name="status"  nullable="false"  length="255" comment="STATUS"/>
-            <column xsi:type="varchar" name="action"  nullable="false"  length="255" comment="ACTION"/>
+            <column xsi:type="int" name="no_of_day"  nullable="false"  comment="Number of days"/>
+            <column xsi:type="varchar" name="remaining_leave"  nullable="false"  length="255" comment="Remaining Leaves"/>
+            <column xsi:type="varchar" name="reason"  nullable="false"  length="255" comment="Leave Reason"/>
 			<constraint xsi:type="primary" referenceId="PRIMARY">
 				<column name="id"/>
 			</constraint>

@@ -1,8 +1,8 @@
 <?php
-namespace Tenant\Leave\Model\ResourceModel;
+namespace Tenant\Employee\Model\ResourceModel;
 
 
-class Leave extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Document extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
 	
 	public function __construct(
@@ -11,10 +11,8 @@ class Leave extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	{
 		parent::__construct($context);
 	}
-	
 	protected function _construct()
 	{
-		$this->_init('leave', 'id');
+		$this->_init('document', 'emp_no');
 	}
-	
 }

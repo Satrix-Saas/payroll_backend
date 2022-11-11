@@ -6,7 +6,6 @@
 			<column xsi:type="varchar" name="emp_type"  nullable="false"  length="255" comment="EMPLOYEE TYPE"/>
 			<column xsi:type="varchar" name="emp_name"  nullable="false"  length="255" comment="EMPLOYEE NAME"/>
 			<column xsi:type="varchar" name="emp_email"  nullable="false"  length="255" comment="EMPLOYEE E-MAIL"/>
-			<column xsi:type="varchar" name="emp_addr"  nullable="false"  length="255" comment="EMPLOYEE ADDRESS"/>
 			<column xsi:type="date" name="emp_hire_date"  nullable="false" comment="HIRE DATE"/>
 			<column xsi:type="varchar" name="emp_post"  nullable="false"  length="255" comment="JOB TITLE"/>
 			<column xsi:type="varchar" name="emp_dept"  nullable="false"  length="255" comment="DEPARTMENT"/>
@@ -19,12 +18,19 @@
 		</table>
         <table name="holiday" resource="default" engine="innodb" comment="HOLIDAY">
 			<column xsi:type="int" name="sr_no"  nullable="false" identity="true" comment="SR.NO"/>
-			<column xsi:type="varchar" name="title"  nullable="false"  length="255" comment="TITLE"/>
+			<column xsi:type="varchar" name="holiday_name"  nullable="false"  length="255" comment="HOLIDAY NAME"/>
 			<column xsi:type="date" name="holiday_date"  nullable="false" comment="HOLIDAY DATE"/>
-			<column xsi:type="varchar" name="day"  nullable="false"  length="255" comment="DAY"/>
-			<column xsi:type="varchar" name="action"  nullable="false"  length="255" comment="ACTION"/>
 			<constraint xsi:type="primary" referenceId="PRIMARY">
 				<column name="sr_no"/>
+			</constraint>
+		</table>
+		<table name="document" resource="default" engine="innodb" comment="DOCUMENT">
+			<column xsi:type="int" name="emp_no"  nullable="false" identity="true" comment="EMP.NO"/>
+			<column xsi:type="varchar" name="upload_document"  nullable="false"  length="255" comment="Upload new documents"/>
+			<column xsi:type="varchar" name="description"  nullable="false"  length="255" comment="Description?"/>
+			<column xsi:type="varchar" name="file_image"  nullable="false"  length="255" comment="Image documents?"/>
+			<constraint xsi:type="primary" referenceId="PRIMARY">
+				<column name="emp_no"/>
 			</constraint>
 		</table>
 </schema>

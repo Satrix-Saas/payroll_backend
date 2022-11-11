@@ -1,6 +1,6 @@
 <?php
-namespace Tenant\Leave\Model;
-class Leave extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+namespace Tenant\Employee\Model;
+class Document extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
 {
 	const CACHE_TAG = 'formdata';
 
@@ -10,7 +10,7 @@ class Leave extends \Magento\Framework\Model\AbstractModel implements \Magento\F
 
 	protected function _construct()
 	{
-		$this->_init('Tenant\Leave\Model\ResourceModel\Leave');
+		$this->_init('Tenant\Employee\Model\ResourceModel\Document');
 	}
 
 	public function getIdentities()
